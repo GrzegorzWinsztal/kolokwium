@@ -1,0 +1,69 @@
+student@student:~$ cd ~
+student@student:~$ mkdir raporty
+student@student:~$ chmod 700 raporty
+student@student:~$ cd raporty
+student@student:~/raporty$ touch statystyki.csv
+student@student:~/raporty$ echo "miasto,populacja,rok" > statystyki.csv
+student@student:~/raporty$ echo "Warszawa,1800000,2023" >> statystyki.csv
+echo "Lublin,340000,2023" >> statystyki.csv
+echo "Gdańsk,470000,2023" >> statystyki.csv
+echo "Kraków,790000,2023" >> statystyki.csv
+student@student:~/raporty$ cat statystyki.csv
+miasto,populacja,rok
+Warszawa,1800000,2023
+Lublin,340000,2023
+Gdańsk,470000,2023
+Kraków,790000,2023
+student@student:~/raporty$ touch .archiwum_statystyk.csv
+student@student:~/raporty$ ls -la
+razem 12
+drwx------  2 student student 4096 cze 15 10:40 .
+drwxr-x--- 25 student student 4096 cze 15 10:38 ..
+-rw-rw-r--  1 student student    0 cze 15 10:40 .archiwum_statystyk.csv
+-rw-rw-r--  1 student student  102 cze 15 10:40 statystyki.csv
+student@student:~/raporty$ find /etc -type f -name "*net*"
+find: ‘/etc/cups/ssl’: Brak dostępu
+/etc/netplan/01-network-manager-all.yaml
+/etc/default/networkd-dispatcher
+/etc/issue.net
+find: ‘/etc/credstore’: Brak dostępu
+/etc/sysctl.d/10-network-security.conf
+/etc/sane.d/net.conf
+/etc/sane.d/dell1600n_net.conf
+/etc/apparmor.d/abi/kernel-5.4-outoftree-network
+/etc/apparmor.d/abstractions/dbus-network-manager-strict
+/etc/apparmor.d/slirp4netns
+find: ‘/etc/ssl/private’: Brak dostępu
+/etc/perl/Net/libnet.cfg
+/etc/netconfig
+/etc/systemd/networkd.conf
+/etc/bluetooth/network.conf
+find: ‘/etc/polkit-1/rules.d’: Brak dostępu
+/etc/modprobe.d/blacklist-rare-network.conf
+/etc/networks
+find: ‘/etc/credstore.encrypted’: Brak dostępu
+find: ‘/etc/sssd’: Brak dostępu
+/etc/cloud/clean.d/99-installer-use-networkmanager
+/etc/cloud/cloud.cfg.d/90-installer-network.cfg
+student@student:~/raporty$ find / -type d -name "*log*" 2>/dev/null > logdirs.txt
+student@student:~/raporty$ tail -n +2 statystyki.csv | sort -t',' -k1 | nl -s',' > .archiwum_statystyk2.csv
+student@student:~/raporty$ diff .archiwum_statystyk.csv .archiwum_statystyk2.csv
+0a1,4
+>      1,Gdańsk,470000,2023
+>      2,Kraków,790000,2023
+>      3,Lublin,340000,2023
+>      4,Warszawa,1800000,2023
+student@student:~/raporty$ cat statystyki.csv | sed 's/,/ /g' > .archiwum_statystyk.csv
+student@student:~/raporty$ sed -n '/,[0-9]*8[0-9]*,/p' statystyki.csv
+Warszawa,1800000,2023
+student@student:~/raporty$ df | awk 'NR>1 {used+=$3; avail+=$4; print $6 ": Used=" $3 "KB, Available=" $4 "KB"} END {print "SUM: Used=" used "KB, Available=" avail "KB"}'
+/run: Used=2272KB, Available=1601460KB
+/: Used=18814524KB, Available=27567824KB
+/dev/shm: Used=4KB, Available=8018648KB
+/run/lock: Used=8KB, Available=5112KB
+/sys/firmware/efi/efivars: Used=170KB, Available=72KB
+/boot/efi: Used=78965KB, Available=19339KB
+/run/user/1000: Used=2544KB, Available=1601184KB
+SUM: Used=18898487KB, Available=38813639KB
+student@student:~/raporty$ 
+
